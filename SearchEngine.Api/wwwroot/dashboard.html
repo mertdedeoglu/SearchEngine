@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input, select {
+            padding: 6px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Search Dashboard</h2>
+
+    <div>
+        <input id="query" placeholder="Search keyword...">
+        <select id="sortBy">
+            <option value="score">Score</option>
+            <option value="publishedAt">Published At</option>
+        </select>
+        <button onclick="search()">Search</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Score</th>
+                <th>Provider</th>
+                <th>Published</th>
+            </tr>
+        </thead>
+        <tbody id="results"></tbody>
+    </table>
+
+    <script>
+async function search() {
+    const q = document.getElementById("query").value;
+    const sort = document.getElementById("sortBy").value;
+
+    let url = `/api/search?query=${q}&sortBy=${sort}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const tbody = document.getElementById("results");
+    tbody.innerHTML = "";
+
+    data.items.forEach(item => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${item.title}</td>
+                <td>${item.type}</td>
+                <td>${item.score.toFixed(2)}</td>
+                <td>${item.providerName}</td>
+                <td>${item.publishedAtUtc}</td>
+            </tr>
+        `;
+    });
+}
+    </script>
+
+</body>
+</html>
