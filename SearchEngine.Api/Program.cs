@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Scrutor;
+using SearchEngine.Api.Middlewares;
 using SearchEngine.Application.Interfaces;
 using SearchEngine.Application.Services;
 using SearchEngine.Domain.Providers;
@@ -59,5 +60,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 app.Run();
+
+
+namespace SearchEngine.Api
+{
+    public partial class Program { }
+}
+

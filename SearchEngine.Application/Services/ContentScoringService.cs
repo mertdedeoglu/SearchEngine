@@ -31,7 +31,7 @@ namespace SearchEngine.Application.Services
                 TextContent t when t.ReadingTimeMinutes > 0 => (t.Reactions / t.ReadingTimeMinutes) * 5.0,
                 _ => 0
             };
-            return (baseScore * typeMultiplier) + recencyScore * engagementScore;
+            return (baseScore * typeMultiplier) + recencyScore + engagementScore;
         }
 
         private double CalculateRecencyScore(DateTime publishedTime)

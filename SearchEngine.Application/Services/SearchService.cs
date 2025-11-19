@@ -40,13 +40,14 @@ namespace SearchEngine.Application.Services
             q = request.SortBy switch
             {
                 "publishedTime" => q.OrderByDescending(x => x.PublishedTime),
-                "score" => q.OrderByDescending(x => x.FinalScore)
+                "score" => q.OrderByDescending(x => x.FinalScore),
+                _ => q.OrderBy(x=>x.Title),
             };
 
             //4. Pagination
-            int total = await q.CountAsync(cancellationToken);
+            int total = q.Count();
 
-            var items = await q
+            var items = q
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
             .Select(x => new SearchResultItemDto
@@ -58,7 +59,7 @@ namespace SearchEngine.Application.Services
                 Url = x.Url,
                 PublishedTime = x.PublishedTime
             })
-            .ToListAsync(cancellationToken);
+            .ToList();
 
             return new SearchResultDto
             {

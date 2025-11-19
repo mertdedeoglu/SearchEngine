@@ -71,7 +71,7 @@ async function search() {
         tbody.innerHTML += `
             <tr>
                 <td>${item.title}</td>
-                <td>${item.type}</td>
+                <td>${convertType(item.type)}</td>
                 <td>${item.score.toFixed(2)}</td>
                 <td>${item.providerName}</td>
                 <td>${item.publishedAtUtc}</td>
@@ -79,6 +79,12 @@ async function search() {
         `;
     });
 }
+
+ async function convertType(type) {
+            if (type == 1) return "Video";
+            if (type == 2) return "Metin";
+            return "";
+        }
     </script>
 
 </body>

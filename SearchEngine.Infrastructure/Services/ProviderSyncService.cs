@@ -1,4 +1,5 @@
-﻿using SearchEngine.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SearchEngine.Application.Interfaces;
 using SearchEngine.Domain.Providers;
 using SearchEngine.Infrastructure.Persistence;
 using System;
@@ -36,10 +37,30 @@ namespace SearchEngine.Infrastructure.Services
 
                 foreach (var item in items)
                 {
+                    // Skor hesaplama
                     item.FinalScore = _scoring.CalculateScore(item);
-                }
 
-                await _db.AddRangeAsync(items);
+                    // DB'de var mı kontrol
+                    var existing = await _db.ContentItems
+                        .FirstOrDefaultAsync(x => x.ProviderItemId == item.ProviderItemId && x.ProviderName == item.ProviderName);
+
+                    if (existing == null)
+                    {
+                        // INSERT
+                        await _db.ContentItems.AddAsync(item);
+                    }
+                    else
+                    {
+                        // UPDATE
+                        existing.Title = item.Title;
+                        existing.Description = item.Description;
+                        existing.Type = item.Type;
+                        existing.PublishedTime = item.PublishedTime;
+                        existing.FinalScore = item.FinalScore;
+                        existing.Url = item.Url;
+                        existing.ProviderName = item.ProviderName;
+                    }
+                }
             }
 
             await _db.SaveChangesAsync();

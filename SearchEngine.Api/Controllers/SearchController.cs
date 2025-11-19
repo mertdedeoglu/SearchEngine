@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SearchEngine.Application.Dtos;
 using SearchEngine.Application.Interfaces;
+using System.Net.Mime;
 
 namespace SearchEngine.Api.Controllers;
 
