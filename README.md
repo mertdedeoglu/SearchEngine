@@ -143,6 +143,9 @@ dotnet ef database update -p SearchEngine.Infrastructure -s SearchEngine.Api
 
 Dosya: `wwwroot/dashboard.html`
 
+<img width="1700" height="327" alt="image" src="https://github.com/user-attachments/assets/58487dcf-186f-4364-8a70-80fc6b8c5681" />
+
+
 Özellikler:
 
 * Fetch API ile `/api/search` çağrısı
