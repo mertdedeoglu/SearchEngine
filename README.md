@@ -23,18 +23,19 @@ Bu proje kapsamında:
 - HttpClient  
 - InMemory Cache  
 - Swagger  
-- xUnit  
+- xUnit Test Framework
 
 ### Neden Bu Teknolojiler?
 
 | Teknoloji | Tercih Nedeni |
 |----------|----------------|
 | **.NET Core 9** | Modern API geliştirme, yüksek performans |
-| **Clean Architecture** | Modüler, provider bağımsız, kolay test edilebilir |
-| **PostgreSQL** | Güçlü JSON/XML desteği, ölçeklenebilir |
-| **InMemory Cache** | Düşük latency |
-| **HttpClientFactory** | Sağlam connection pooling |
-| **xUnit** | Önerilen test framework |
+| **Clean Architecture** | Provider’lar ve iş mantığı birbirinden tamamen ayrılır. Kod modüler, genişlemeye açık (Open/Closed), test edilebilir ve bakım maliyeti düşük olur. Bu proje özelinde JSON ve XML provider eklemenin çok kolay olmasını sağlar. |
+| **Entity Framework Core** | Hızlı geliştirme, güçlü LINQ desteği ve PostgreSQL ile uyumlu migration yapısı sunar. Okunabilir ve sürdürülebilir veri erişimi sağlar. |
+| **PostgreSQL** | Yüksek performanslı, ölçeklenebilir, kurumsal projelerde tercih edilen bir açık kaynak DB. JSON/XML desteği güçlüdür, bu nedenle provider verisini depolamak için idealdir. |
+| **InMemory Cache** | Düşük latency, sık yapılan arama sonuçlarının 30 saniyelik kısa ömürlü cache ile tutulması sorgu performansını ciddi şekilde artırır. Ek olarak Redis veya distributed cache’e kolay geçiş sağlar. |
+| **HttpClient** | Provider entegrasayonlarında bağımsız olarak kullanılır. |
+| **xUnit** | .NET ekosisteminde standart test framework. Mock tabanlı unit testler ve API endpoint testleri için ideal. Clean Architecture ile doğal bir uyum sağlar. |
 
 ---
 
