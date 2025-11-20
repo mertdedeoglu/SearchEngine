@@ -170,9 +170,15 @@ cd SearchEngine
 (Docker veya local)
 
 ### 3) Migration çalıştır
-
+Dotnet EF yüklü ise 
 ```bash
 dotnet ef database update -p SearchEngine.Infrastructure -s SearchEngine.Api
+```
+Değil ise ;
+Nuget Package Manager > Package Manager Console açılır. Aşağıdaki komut çalıştırılır.
+
+```bash
+update-database
 ```
 
 ### 4) API’yi başlat
