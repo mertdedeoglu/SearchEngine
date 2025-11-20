@@ -53,7 +53,7 @@ namespace SearchEngine.Application.Services
             .Select(x => new SearchResultItemDto
             {
                 Title = x.Title,
-                Type = x.Type,
+                TypeName = x.Type.ToString(),
                 Score = x.FinalScore,
                 ProviderName = x.ProviderName,
                 Url = x.Url,

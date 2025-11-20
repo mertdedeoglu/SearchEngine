@@ -71,20 +71,25 @@ async function search() {
         tbody.innerHTML += `
             <tr>
                 <td>${item.title}</td>
-                <td>${convertType(item.type)}</td>
+                <td>${item.typeName}</td>
                 <td>${item.score.toFixed(2)}</td>
                 <td>${item.providerName}</td>
-                <td>${item.publishedAtUtc}</td>
+                <td>${formatDate(item.publishedTime)}</td>
             </tr>
         `;
     });
-}
-
- async function convertType(type) {
-            if (type == 1) return "Video";
-            if (type == 2) return "Metin";
-            return "";
         }
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString("tr-TR", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+
     </script>
 
 </body>

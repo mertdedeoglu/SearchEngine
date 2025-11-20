@@ -11,6 +11,7 @@ namespace SearchEngine.Application.Dtos
     {
         public string Title { get; set; } = default!;
         public ContentType Type { get; set; }
+        public string TypeName { get; set; }
         public double Score { get; set; }
         public string ProviderName { get; set; } = default!;
         public string Url { get; set; } = default!;
