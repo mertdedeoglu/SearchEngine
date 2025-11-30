@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SearchEngine.Infrastructure.Services;
 
 namespace SearchEngine.Api.Controllers;
 
+[EnableRateLimiting("ProviderSyncLimiter")]
 [ApiController]
 [Route("api/providers")]
 public class ProviderSyncController : ControllerBase

@@ -19,6 +19,12 @@ namespace SearchEngine.Api.Middlewares
             try
             {
                 await _next(context);
+
+                if (context.Response.StatusCode == (int)HttpStatusCode.TooManyRequests)
+                {
+                    await HandleErrorAsync(context, "Rate limit exceeded. Please try again later.", "RateLimitExceeded", context.Response.StatusCode);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -45,5 +51,23 @@ namespace SearchEngine.Api.Middlewares
 
             return context.Response.WriteAsync(json);
         }
+        private Task HandleErrorAsync(HttpContext context, string message, string errorType, int statusCode)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+
+            var response = new
+            {
+                success = false,
+                message,
+                errorType,
+                statusCode
+            };
+
+            var json = JsonSerializer.Serialize(response);
+
+            return context.Response.WriteAsync(json);
+        }
     }
+
 }

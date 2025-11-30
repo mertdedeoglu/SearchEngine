@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Scrutor;
 using SearchEngine.Api.Middlewares;
@@ -49,6 +50,18 @@ builder.Services.AddScoped<IContentProvider, XmlContentProvider>();
 // Sync service
 builder.Services.AddScoped<ProviderSyncService>();
 
+// Rate Limit
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("ProviderSyncLimiter", limiter =>
+    {
+        limiter.Window = TimeSpan.FromMinutes(1);
+        limiter.PermitLimit = 5;
+        limiter.QueueLimit = 0;
+    });
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
 var app = builder.Build();
 
 // Swagger
@@ -61,6 +74,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseRateLimiter();
 app.MapControllers();
 app.Run();
 
